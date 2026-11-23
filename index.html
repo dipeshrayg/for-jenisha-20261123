@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+  <title>For Barsa 💫</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{width:100%;height:100%;background:radial-gradient(ellipse at 30% 20%,#1a0a2e,#080012 50%,#000005);overflow:hidden;font-family:'Raleway',sans-serif;color:#fff;cursor:none}
+    #sc,#pc{position:fixed;top:0;left:0;width:100%;height:100%}
+    #sc{z-index:1}#pc{z-index:5;pointer-events:none}
+    .cur{position:fixed;z-index:9999;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,157,.9),transparent 70%);pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:screen}
+    .scene{position:relative;z-index:10;width:100%;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:clamp(14px,3vh,28px)}
+    .title{font-family:'Dancing Script',cursive;font-size:clamp(3.5rem,12vw,8rem);font-weight:700;background:linear-gradient(135deg,#ff9de2,#ff6b9d 30%,#c44dff 65%,#79cfff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0;filter:blur(24px);transform:translateY(24px) scale(.92);animation:reveal 1.6s cubic-bezier(.22,1,.36,1) forwards 2.6s;letter-spacing:.04em}
+    .title::after{content:'';display:block;margin:8px auto 0;height:2px;width:0;background:linear-gradient(90deg,transparent,#ff6b9d,#c44dff,transparent);animation:linegrow 1s ease forwards 4.3s}
+    .sub{font-size:clamp(.7rem,2.2vw,1rem);font-weight:300;letter-spacing:.45em;text-transform:uppercase;color:rgba(255,255,255,.5);opacity:0;animation:fup 1s ease forwards 4.6s}
+    .hw{opacity:0;animation:fup .8s ease forwards 5.4s}
+    .hi{display:inline-block;font-size:clamp(2.2rem,7vw,3.6rem);animation:hpulse 1.6s ease-in-out infinite 5.4s;filter:drop-shadow(0 0 18px rgba(255,107,157,.85))}
+    .mw{max-width:min(580px,92vw);opacity:0;animation:fup 1.2s ease forwards 6.4s}
+    .msg{font-size:clamp(.88rem,2.4vw,1.1rem);font-weight:300;line-height:1.95;color:rgba(255,255,255,.82)}
+    .msg em{font-style:italic;color:#ff6b9d}
+    .msg strong{font-weight:500;color:#e0c0ff}
+    .btn{opacity:0;animation:fup .8s ease forwards 9s;background:transparent;border:1.5px solid rgba(255,107,157,.55);color:#fff;font-family:'Raleway',sans-serif;font-size:clamp(.78rem,2.2vw,.92rem);font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:14px 40px;border-radius:50px;cursor:pointer;transition:all .35s;backdrop-filter:blur(8px)}
+    .btn:hover{border-color:#ff6b9d;box-shadow:0 0 28px rgba(255,107,157,.5),0 0 56px rgba(196,77,255,.2);transform:translateY(-2px)}
+    .ds{position:fixed;bottom:18px;right:20px;font-size:.7rem;letter-spacing:.18em;color:rgba(255,255,255,.22);z-index:20;opacity:0;animation:fi 1s ease forwards 11s}
+    .ht{position:fixed;bottom:18px;left:20px;font-size:.7rem;letter-spacing:.12em;color:rgba(255,255,255,.2);z-index:20;opacity:0;animation:fi 1s ease forwards 12s}
+    @keyframes reveal{to{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}}
+    @keyframes linegrow{to{width:55%}}
+    @keyframes fup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fi{to{opacity:1}}
+    @keyframes hpulse{0%,100%{transform:scale(1)}14%{transform:scale(1.25)}28%{transform:scale(1)}42%{transform:scale(1.15)}70%{transform:scale(1)}}
+  </style>
+</head>
+<body>
+<canvas id="sc"></canvas><canvas id="pc"></canvas>
+<div class="cur" id="cur"></div>
+<div class="scene">
+  <div class="title">Barsa</div>
+  <div class="sub">this is for you</div>
+  <div class="hw"><span class="hi">💗</span></div>
+  <div class="mw"><p class="msg">
+    Of all the stars scattered across this universe,<br>
+    <em>you are the one that makes the whole sky make sense.</em><br><br>
+    Every time I think of you, it feels like<br>
+    watching a constellation appear for the first time —<br>
+    <strong>breathtaking, extraordinary, and rare.</strong><br><br>
+    This universe became more beautiful<br>
+    the moment you were in it, <em>Barsa.</em>
+  </p></div>
+  <button class="btn" id="btn" onclick="sendLove()">✨ Feel My Love ✨</button>
+</div>
+<div class="ds">November 23 · 2026</div>
+<div class="ht">click anywhere for shooting stars</div>
+<script>
+const sc=document.getElementById('sc'),sx=sc.getContext('2d');
+const pc=document.getElementById('pc'),px=pc.getContext('2d');
+let W=sc.width=pc.width=window.innerWidth,H=sc.height=pc.height=window.innerHeight;
+let mx=0,my=0;
+const PAL=['255,255,255','255,200,225','210,185,255','175,220,255'];
+class Star{constructor(){this.init()}init(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*2.2+.15;this.base=Math.random()*.65+.25;this.op=this.base;this.ts=Math.random()*.018+.004;this.tp=Math.random()*Math.PI*2;this.col=PAL[Math.floor(Math.random()*PAL.length)];this.vx=(Math.random()-.5)*.06;this.vy=(Math.random()-.5)*.06;this.layer=Math.random()}update(){this.tp+=this.ts;this.op=Math.max(.08,Math.min(1,this.base+Math.sin(this.tp)*.28));const p=this.layer*.018;this.x+=this.vx+mx*p;this.y+=this.vy+my*p;if(this.x<0)this.x=W;if(this.x>W)this.x=0;if(this.y<0)this.y=H;if(this.y>H)this.y=0}draw(){sx.beginPath();sx.arc(this.x,this.y,this.r,0,Math.PI*2);sx.fillStyle=`rgba(${this.col},${this.op})`;sx.fill();if(this.r>1.4){const g=sx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.r*4);g.addColorStop(0,`rgba(${this.col},${this.op*.35})`);g.addColorStop(1,'rgba(0,0,0,0)');sx.beginPath();sx.arc(this.x,this.y,this.r*4,0,Math.PI*2);sx.fillStyle=g;sx.fill()}}}
+class Streak{constructor(ox,oy){this.x=ox??Math.random()*W*.75;this.y=oy??Math.random()*H*.35;this.speed=Math.random()*9+6;this.angle=Math.PI/4+(Math.random()-.5)*.35;this.trail=[];this.op=1;this.alive=true}update(){this.x+=Math.cos(this.angle)*this.speed;this.y+=Math.sin(this.angle)*this.speed;this.trail.push({x:this.x,y:this.y});if(this.trail.length>22)this.trail.shift();this.op-=.022;if(this.op<=0||this.x>W+50||this.y>H+50)this.alive=false}draw(){if(this.trail.length<2)return;sx.beginPath();sx.moveTo(this.trail[0].x,this.trail[0].y);for(let i=1;i<this.trail.length;i++)sx.lineTo(this.trail[i].x,this.trail[i].y);const t0=this.trail[0],tN=this.trail[this.trail.length-1];const g=sx.createLinearGradient(t0.x,t0.y,tN.x,tN.y);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(1,`rgba(255,230,245,${this.op})`);sx.strokeStyle=g;sx.lineWidth=1.8;sx.stroke();const hg=sx.createRadialGradient(tN.x,tN.y,0,tN.x,tN.y,7);hg.addColorStop(0,`rgba(255,255,255,${this.op})`);hg.addColorStop(1,'rgba(255,255,255,0)');sx.beginPath();sx.arc(tN.x,tN.y,7,0,Math.PI*2);sx.fillStyle=hg;sx.fill()}}
+const stars=Array.from({length:420},()=>new Star());
+const streaks=[];let lastS=0;
+function drawNebula(){const n1=sx.createRadialGradient(W*.18,H*.28,0,W*.18,H*.28,W*.42);n1.addColorStop(0,'rgba(255,100,160,.035)');n1.addColorStop(.55,'rgba(190,70,255,.02)');n1.addColorStop(1,'rgba(0,0,0,0)');sx.fillStyle=n1;sx.fillRect(0,0,W,H);const n2=sx.createRadialGradient(W*.82,H*.72,0,W*.82,H*.72,W*.38);n2.addColorStop(0,'rgba(70,180,255,.04)');n2.addColorStop(1,'rgba(0,0,0,0)');sx.fillStyle=n2;sx.fillRect(0,0,W,H)}
+function loopS(t){sx.clearRect(0,0,W,H);drawNebula();if(t-lastS>4800+Math.random()*4000){streaks.push(new Streak());lastS=t}stars.forEach(s=>{s.update();s.draw()});for(let i=streaks.length-1;i>=0;i--){streaks[i].update();streaks[i].draw();if(!streaks[i].alive)streaks.splice(i,1)}requestAnimationFrame(loopS)}
+requestAnimationFrame(loopS);
+const EM=['💗','💕','✨','💖','💝','🌸','⭐','🌟','💫','🪐'];
+const parts=[];
+class Part{constructor(x,y,burst){this.x=x;this.y=y;this.em=EM[Math.floor(Math.random()*EM.length)];if(burst){this.vx=(Math.random()-.5)*14;this.vy=(Math.random()-.85)*16;this.grav=.28;this.decay=Math.random()*.016+.01;this.sz=Math.random()*22+10}else{this.vx=(Math.random()-.5)*1.4;this.vy=-(Math.random()*1.8+.6);this.grav=-.008;this.decay=.0025+Math.random()*.002;this.sz=Math.random()*14+7}this.rot=Math.random()*Math.PI*2;this.rs=(Math.random()-.5)*.12;this.life=1}update(){this.x+=this.vx;this.y+=this.vy;this.vy+=this.grav;this.vx*=.985;this.rot+=this.rs;this.life-=this.decay}draw(){px.save();px.globalAlpha=Math.max(0,this.life);px.translate(this.x,this.y);px.rotate(this.rot);px.font=`${this.sz}px Arial`;px.textAlign='center';px.textBaseline='middle';px.fillText(this.em,0,0);px.restore()}}
+let ambT=0;
+function loopP(t){px.clearRect(0,0,W,H);if(t-ambT>2200){parts.push(new Part(Math.random()*W,H+20,false));ambT=t}for(let i=parts.length-1;i>=0;i--){parts[i].update();parts[i].draw();if(parts[i].life<=0)parts.splice(i,1)}requestAnimationFrame(loopP)}
+requestAnimationFrame(loopP);
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';mx=(e.clientX-W/2)/W*2;my=(e.clientY-H/2)/H*2});
+document.addEventListener('click',e=>{if(e.target.id!=='btn'){const ss=new Streak(e.clientX-80,e.clientY-80);ss.angle=Math.PI/4+(Math.random()-.5)*.5;streaks.push(ss)}});
+document.addEventListener('touchstart',e=>{const t=e.touches[0];const ss=new Streak(t.clientX-80,t.clientY-80);ss.angle=Math.PI/4+(Math.random()-.5)*.5;streaks.push(ss)},{passive:true});
+function sendLove(){const btn=document.getElementById('btn');const r=btn.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;for(let i=0;i<60;i++)setTimeout(()=>parts.push(new Part(cx,cy,true)),i*18);btn.textContent='💗 Sent with Love 💗';btn.style.cssText+='border-color:rgba(255,107,157,1);box-shadow:0 0 40px rgba(255,107,157,.65),0 0 80px rgba(196,77,255,.3);';setTimeout(()=>{btn.textContent='✨ Feel My Love ✨';btn.style.borderColor='rgba(255,107,157,.55)';btn.style.boxShadow=''},3200)}
+window.addEventListener('resize',()=>{W=sc.width=pc.width=window.innerWidth;H=sc.height=pc.height=window.innerHeight});
+</script>
+</body>
+</html>
